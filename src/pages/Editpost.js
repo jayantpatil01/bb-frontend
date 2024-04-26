@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { userContext } from '../context/userContext';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
+import loaderImg from '../images/loading.gif'; // Import loader image
 
 const EditPost = () => {
   const { currentUser } = useContext(userContext);
@@ -22,6 +23,8 @@ const EditPost = () => {
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // Initially set to true
+
   const postCategory = ["Agriculture", "Business", "Education", "Entertainment", "Art", "Investments", "Weather", "Uncategorized"];
   const formats = [
     'header',
@@ -47,6 +50,8 @@ const EditPost = () => {
         setDescription(response.data.description);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false); // Set isLoading to false when data fetching is complete
       }
     }
     getPost();
@@ -54,6 +59,7 @@ const EditPost = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Show loader when update starts
     const postData = new FormData();
     postData.set('title', title);
     postData.set('category', category);
@@ -67,6 +73,8 @@ const EditPost = () => {
       }
     } catch (err) {
       setError(err?.response?.data?.message);
+    } finally {
+      setIsLoading(false); // Hide loader when update finishes (whether successful or not)
     }
   };
 
@@ -74,19 +82,25 @@ const EditPost = () => {
     <section className='create-post'>
       <div className='container'>
         <h2>Edit post</h2>
-        {error && <p className='form-error-message'>{error}</p>}
-        <form className='form create-post-form' onSubmit={handleUpdate}>
-          <input type='text' placeholder='Title' value={title} onChange={e => setTitle(e.target.value)} autoFocus />
-          <select name='category' value={category} onChange={e => setCategory(e.target.value)}>
-            {postCategory.map(cat => <option key={cat}>{cat}</option>)}
-          </select>
-          <ReactQuill modules={modules} formats={formats} value={description} onChange={setDescription} className='q1-editor' />
+        {isLoading ? (
+          <img src={loaderImg} alt="Loading..." />
+        ) : (
+          <>
+            {error && <p className='form-error-message'>{error}</p>}
+            <form className='form create-post-form' onSubmit={handleUpdate}>
+              <input type='text' placeholder='Title' value={title} onChange={e => setTitle(e.target.value)} autoFocus />
+              <select name='category' value={category} onChange={e => setCategory(e.target.value)}>
+                {postCategory.map(cat => <option key={cat}>{cat}</option>)}
+              </select>
+              <ReactQuill modules={modules} formats={formats} value={description} onChange={setDescription} className='q1-editor' />
 
-          <input type='file' onChange={e => setThumbnail(e.target.files[0])} accept='image/png, image/jpeg' />
-          <button type='submit' className='btn btn-primary'>
-            Update post
-          </button>
-        </form>
+              <input type='file' onChange={e => setThumbnail(e.target.files[0])} accept='image/png, image/jpeg' />
+              <button type='submit' className='btn btn-primary' disabled={isLoading}>
+                {isLoading ? 'Updating...' : 'Update post'} {/* Button text changes when loading */}
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </section>
   );
