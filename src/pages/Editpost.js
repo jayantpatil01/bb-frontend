@@ -96,7 +96,7 @@ const EditPost = () => {
 
               <input type='file' onChange={e => setThumbnail(e.target.files[0])} accept='image/png, image/jpeg' />
               <button type='submit' className='btn btn-primary' disabled={isLoading}>
-                {isLoading ? 'Updating...' : 'Update post'} {/* Button text changes when loading */}
+                {isLoading ? <img src={loaderImg} alt="Loading..." /> : 'Update post'} {/* Button text changes when loading */}
               </button>
             </form>
           </>
