@@ -454,34 +454,35 @@ author-info p{
     width: 4.5rem;
     aspect-ratio:1/1;
 }
-
-/* ================Media Quries================= */
-@media screen and (max-width:800px) {
-    h1{
+/        //////////////////////////////////////////////////////////////////*  */
+@media screen and (max-width: 800px) {
+    h1 {
         font-size: 1.7rem;
     }
-    h2{
+    h2 {
         font-size: 1.4rem;
     }
-    h3{
+    h3 {
         font-size: 1.3rem;
     }
-    .container{
-        width: var(--container-width-md);
+     .container {
+        width: calc(var(--container-width-md) - 40px); /* Adjusted width to account for padding */
+        padding: 0 20px; /* Add padding to the container */
+        margin: 0 auto; /* Center the container */
+        max-width: 100%; /* Ensure the container doesn't exceed the viewport width */
     }
     /* Navbar */
-
-    .nav-container{
+    .nav-container {
         position: relative;
     }
-    .nav-menu{
+    .nav-menu {
         position: absolute;
         top: 5rem;
         right: 0;
         flex-direction: column;
         gap: 0;
     }
-    .nav-menu li{
+    .nav-menu li {
         width: 100%;
         box-shadow: -2rem 4rem 4rem rgba(0, 0, 0, 0.26);
         animation: dropdown 500ms ease forwards;
@@ -489,68 +490,66 @@ author-info p{
         transform: rotateX(90deg);
         transform-origin: top;
     }
-    .nav-menu li a{
+    .nav-menu li a {
         display: block;
         background: var(--color-white);
         padding: 0.85rem 2.5rem;
     }
     @keyframes dropdown {
-        to{
+        to {
             opacity: 1;
             transform: rotateX(0);
         }
     }
-    .nav-menu li:nth-child(2){
-        animation-delay:300ms ;
+    .nav-menu li:nth-child(2) {
+        animation-delay: 300ms;
     }
-    .nav-menu li:nth-child(3){
-        animation-delay: 600ms
+    .nav-menu li:nth-child(3) {
+        animation-delay: 600ms;
     }
-    .nav-menu li:nth-child(4){
+    .nav-menu li:nth-child(4) {
         animation-delay: 900ms;
     }
-    
-        .nav-toggle-btn{
+    .nav-toggle-btn {
         display: inline-block;
-            background: transparent;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .post-container {
-            display: flex;
-            flex-wrap: wrap; /* Ensure items wrap to the next line if there's not enough space */
-            gap: 1rem;
-            overflow: hidden; /* Hide any overflowing content */
-        }
-        .footer-categories{
-            flex-direction: column;
-        }
-        .post-details{
-            width: 100%;
-            background: transparent;
-            padding: 0;
-        }
-        .register ,.login,.create-post{
-            width: 100%;
-        }
-        .form.form-profile{
-            margin-top: 2.5rem;
-            width: 100%;
-        }
-        .authors-container{
-            grid-template-columns: 1fr;
-            gap: 1.2rem;
-        }
-        .dashboard-post{
-            flex-direction: column;
-        }
-        .dashboard-post-info{
-            gap: 1.5rem;
-        }
-        .dashboard-post-thumbnail{
-            width: 5rem;
-        }
+        background: transparent;
+        font-size: 1.5rem;
+        cursor: pointer;
     }
-
-    
-      
+    .post-container {
+        display: flex;
+        flex-wrap: wrap; /* Ensure items wrap to the next line if there's not enough space */
+        gap: 1rem;
+        overflow: hidden; /* Hide any overflowing content */
+    }
+    .footer-categories {
+        flex-direction: column;
+    }
+    .post-details {
+        width: 100%;
+        background: transparent;
+        padding: 0;
+    }
+    .register,
+    .login,
+    .create-post {
+        width: 100%;
+    }
+    .form.form-profile {
+        margin-top: 2.5rem;
+        width: 100%;
+    }
+    .authors-container {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    .dashboard-post {
+        flex-direction: column;
+    }
+    .dashboard-post-info {
+        gap: 1.5rem;
+    }
+    .dashboard-post-thumbnail {
+        width: 5rem;
+    }
+}
